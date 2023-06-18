@@ -2,9 +2,9 @@ openapi: 3.0.1
 info:
   title: TODO Plugin
   description: A plugin that allows the user to create and manage a TODO list using ChatGPT.
-  version: 'v1'
+  version: "v1"
 servers:
-  - url: http://localhost:3333
+  - url: https://87c3-68-234-232-23.ngrok-free.app
 paths:
   /todos:
     get:
@@ -16,7 +16,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTodosResponse'
+                $ref: "#/components/schemas/getTodosResponse"
     post:
       operationId: addTodo
       summary: Add a todo to the list
@@ -25,14 +25,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/addTodoRequest'
+              $ref: "#/components/schemas/addTodoRequest"
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/addTodoResponse'
+                $ref: "#/components/schemas/addTodoResponse"
 
 components:
   schemas:
@@ -44,14 +44,14 @@ components:
           items:
             type: string
           description: The list of todos.
-    
+
     addTodoRequest:
       type: object
       properties:
         todo:
           type: string
           description: The todo item to add.
-    
+
     addTodoResponse:
       type: object
       properties:
