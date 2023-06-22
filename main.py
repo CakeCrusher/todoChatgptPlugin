@@ -25,10 +25,11 @@ def serve_manifest():
 
 @app.route('/openapi.yaml')
 def serve_openapi_yaml():
-    with open(os.path.join(os.path.dirname(__file__), 'openapi.yaml'), 'r') as f:
-        yaml_data = f.read()
-    yaml_data = yaml.load(yaml_data, Loader=yaml.FullLoader)
-    return jsonify(yaml_data)
+    # with open(os.path.join(os.path.dirname(__file__), 'openapi.yaml'), 'r') as f:
+    #     yaml_data = f.read()
+    # yaml_data = yaml.load(yaml_data, Loader=yaml.FullLoader)
+    # return jsonify(yaml_data)
+    return send_from_directory(os.path.dirname(__file__), 'openapi.json')
 
 
 @app.route('/openapi.json')

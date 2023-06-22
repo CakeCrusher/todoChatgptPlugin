@@ -1,0 +1,93 @@
+{
+    "components": {
+        "schemas": {
+            "addTodoRequest": {
+                "properties": {
+                    "todo": {
+                        "description": "The todo item to add.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "addTodoResponse": {
+                "properties": {
+                    "todo": {
+                        "description": "The added todo item.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "getTodosResponse": {
+                "properties": {
+                    "todos": {
+                        "description": "The list of todos.",
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "info": {
+        "description": "A plugin that allows the user to create and manage a TODO list using ChatGPT.",
+        "title": "TODO Plugin",
+        "version": "v1"
+    },
+    "openapi": "3.0.1",
+    "paths": {
+        "/todos": {
+            "get": {
+                "operationId": "getTodos",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getTodosResponse"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "summary": "Get the list of todos"
+            },
+            "post": {
+                "operationId": "addTodo",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/addTodoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/addTodoResponse"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "summary": "Add a todo to the list"
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3333"
+        }
+    ]
+}
