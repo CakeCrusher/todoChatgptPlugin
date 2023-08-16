@@ -1,24 +1,24 @@
 {
   "schema_version": "v1",
-  "name_for_human": "TODO List",
-  "name_for_model": "todo",
+  "name_for_human": "TODO List (OAuth)",
+  "name_for_model": "todo_oauth",
   "description_for_human": "Manage your TODO list. You can add, remove and view your TODOs.",
-  "description_for_model": "Help the user with managing a TODO list. You can add, remove and view your TODOs.",
+  "description_for_model": "Plugin for managing a TODO list, you can add, remove and view your TODOs.",
   "auth": {
-    "type": "oauth",
-    "client_url": "https://87c3-68-234-232-23.ngrok-free.app/oauth",
-    "scope": "",
-    "authorization_url": "https://87c3-68-234-232-23.ngrok-free.app/auth/oauth_exchange",
-    "authorization_content_type": "application/json",
-    "verification_tokens": {
-      "openai": "7d8cc2c05c224baf8560d366aef31e29"
-    }
+      "type": "oauth",
+      "client_url": "PLUGIN_HOSTNAME/oauth",
+      "scope": "",
+      "authorization_url": "PLUGIN_HOSTNAME/auth/oauth_exchange",
+      "authorization_content_type": "application/json",
+      "verification_tokens": {
+          "openai": "VERIFICATION_TOKEN"
+      }
   },
   "api": {
-    "type": "openapi",
-    "url": "https://87c3-68-234-232-23.ngrok-free.app/openapi.yaml"
+      "type": "openapi",
+      "url": "PLUGIN_HOSTNAME/openapi.yaml"
   },
-  "logo_url": "https://87c3-68-234-232-23.ngrok-free.app/logo.png",
-  "contact_email": "support@example.com",
+  "logo_url": "PLUGIN_HOSTNAME/logo.png",
+  "contact_email": "contact@example.com",
   "legal_info_url": "http://www.example.com/legal"
 }
