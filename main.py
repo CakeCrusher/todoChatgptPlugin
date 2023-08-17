@@ -21,6 +21,10 @@ _TODO = []
 
 @app.route('/.well-known/ai-plugin.json')
 def serve_manifest():
+    # get current host
+    scheme = request.headers.get('X-Forwarded-Proto', 'http')
+    thisUrl = f"{scheme}://{request.host}"
+    
     with open(os.path.join(os.path.dirname(__file__), 'ai-plugin.json'), 'r') as f:
         content = f.read()
     
