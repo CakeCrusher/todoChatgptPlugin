@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 PORT = 3333
 thisUrl = "YOUR_ROOT_URL_HERE"
-verificationToken = "YOUR_VERIFICATION_TOKEN_HERE"
+verificationToken = "cad445511e434f489a44ae82e6fd617b"
 
 # Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
 CORS(app, origins=[thisUrl, "https://chat.openai.com"])
@@ -38,6 +38,9 @@ def serve_manifest():
 
 @app.route('/openapi.yaml')
 def serve_openapi_yaml():
+    scheme = request.headers.get('X-Forwarded-Proto', 'http')
+    thisUrl = f"{scheme}://{request.host}"
+
     with open(os.path.join(os.path.dirname(__file__), 'openapi.yaml'), 'r') as f:
         yaml_data = f.read()
 
@@ -52,6 +55,9 @@ def serve_openapi_yaml():
 
 @app.route('/openapi.json')
 def serve_openapi_json():
+    scheme = request.headers.get('X-Forwarded-Proto', 'http')
+    thisUrl = f"{scheme}://{request.host}"
+
     with open(os.path.join(os.path.dirname(__file__), 'openapi.json'), 'r') as f:
         json_data = f.read()
 
@@ -65,6 +71,10 @@ def serve_openapi_json():
 @app.route('/todos', methods=['GET', 'POST'])
 def wrapper():
     global _TODO
+
+    # get headers
+    headers = request.headers
+    print("todo headers: ", headers)
 
     if request.method == 'GET':
         # Get the list of todos
@@ -89,6 +99,9 @@ OPENAI_CODE = "abc123"
 
 @app.get("/oauth")
 def oauth():
+    # print headers
+    headers = request.headers
+    print("Headers: ", headers)
     query_string = request.query_string.decode('utf-8')
     parts = query_string.split('&')
     kvps = {}
