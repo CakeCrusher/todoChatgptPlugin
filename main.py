@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 PORT = 3333
 thisUrl = "YOUR_ROOT_URL_HERE"
-verificationToken = "cad445511e434f489a44ae82e6fd617b"
+verificationToken = "829b3a8769b041a59634a1c74a804fc4"
 
 # Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
 CORS(app, origins=[thisUrl, "https://chat.openai.com"])
@@ -122,17 +122,22 @@ OPENAI_TOKEN = "def456"
 
 @app.post("/auth/oauth_exchange")
 def oauth_exchange():
+    # Ensure the content type is correct
+    if request.headers.get("Content-Type") != "application/x-www-form-urlencoded":
+        return "Invalid content type", 400
+
     print(f"Request headers: {request.headers}")
-    print(f"Request data: {request.data}")
-    newRequest = request.get_json(force=True)
 
-    print(f"oauth_exchange {newRequest=}")
+    # Parse the form data
+    form_data = request.form
+    print(f"oauth_exchange {form_data=}")
 
-    if newRequest["client_id"] != OPENAI_CLIENT_ID:
+    # Access form data using form_data["key_name"] instead of newRequest["key_name"]
+    if form_data.get("client_id") != OPENAI_CLIENT_ID:
         raise RuntimeError("bad client ID")
-    if newRequest["client_secret"] != OPENAI_CLIENT_SECRET:
+    if form_data.get("client_secret") != OPENAI_CLIENT_SECRET:
         raise RuntimeError("bad client secret")
-    if newRequest["code"] != OPENAI_CODE:
+    if form_data.get("code") != OPENAI_CODE:
         raise RuntimeError("bad code")
 
     return {

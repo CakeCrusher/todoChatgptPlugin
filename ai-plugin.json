@@ -9,7 +9,7 @@
       "client_url": "PLUGIN_HOSTNAME/oauth",
       "scope": "",
       "authorization_url": "PLUGIN_HOSTNAME/auth/oauth_exchange",
-      "authorization_content_type": "application/json",
+      "authorization_content_type": "application/x-www-form-urlencoded",
       "verification_tokens": {
           "openai": "VERIFICATION_TOKEN"
       }
