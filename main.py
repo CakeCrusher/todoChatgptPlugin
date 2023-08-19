@@ -122,6 +122,8 @@ OPENAI_TOKEN = "def456"
 
 @app.post("/auth/oauth_exchange")
 def oauth_exchange():
+    print(f"Request headers: {request.headers}")
+    print(f"Request data: {request.data}")
     newRequest = request.get_json(force=True)
 
     print(f"oauth_exchange {newRequest=}")
