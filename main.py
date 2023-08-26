@@ -10,7 +10,7 @@ app = Flask(__name__)
 PORT = 3333
 thisUrl = "http://127.0.0.1:3333"
 verificationTokens = {
-    "OPENAI": "OPENAI_VERIFICATION_TOKEN",
+    "OPENAI": "45f78e3abcfd4894ba0fcabe24b7d0a9",
 }
 
 # Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
@@ -91,6 +91,50 @@ def wrapper():
 def serve_logo():
     return send_from_directory(os.path.dirname(__file__), 'logo.png')
 
+OPENAI_CODE = "123"
+
+@app.get("/oauth")
+def oauth():
+    # print headers
+    headers = request.headers
+    print("Headers: ", headers)
+    query_string = request.query_string.decode('utf-8')
+    parts = query_string.split('&')
+    kvps = {}
+    for part in parts:
+        k, v = part.split('=')
+        v = v.replace("%2F", "/").replace("%3A", ":")
+        kvps[k] = v
+    print("OAuth key value pairs from the ChatGPT Request: ", kvps)
+    url = kvps["redirect_uri"] + f"?code={OPENAI_CODE}&state={kvps['state']}"
+    print("URL: ", url)
+    return f'<a href="{url}">Click to authorize</a>'
+
+# Sample names
+OPENAI_CLIENT_ID = "id"
+OPENAI_CLIENT_SECRET = "secret"
+# this is the key to getting authenticated and I was not able to find it in any of the client fetches 
+OPENAI_TOKEN = "def456"
+
+@app.post("/auth/oauth_exchange")
+def oauth_exchange():
+    print(f"Request headers: {request.headers}")
+    print(f"Request data: {request.data}")
+    newRequest = request.get_json(force=True)
+
+    print(f"oauth_exchange {newRequest=}")
+
+    if newRequest["client_id"] != OPENAI_CLIENT_ID:
+        raise RuntimeError("bad client ID")
+    if newRequest["client_secret"] != OPENAI_CLIENT_SECRET:
+        raise RuntimeError("bad client secret")
+    if newRequest["code"] != OPENAI_CODE:
+        raise RuntimeError("bad code")
+
+    return {
+        "access_token": OPENAI_TOKEN,
+        "token_type": "bearer"
+    }
 
 if __name__ == '__main__':
     app.run(port=PORT, debug=True)
