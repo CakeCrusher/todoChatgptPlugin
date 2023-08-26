@@ -4,7 +4,7 @@ info:
   description: A plugin that allows the user to create and manage a TODO list using ChatGPT.
   version: 'v1'
 servers:
-  - url: http://127.0.0.1:3333
+  - url: PLUGIN_HOSTNAME
 paths:
   /todos:
     get:

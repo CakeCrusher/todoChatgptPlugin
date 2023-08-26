@@ -20,20 +20,42 @@ _TODO = []
 
 @app.route('/.well-known/ai-plugin.json')
 def serve_manifest():
-    return send_from_directory(os.path.dirname(__file__), 'ai-plugin.json')
+    # print headers
+    print("\nmanifest headers: \n",request.headers)
+    # get current host
+    scheme = request.headers.get('X-Forwarded-Proto', 'http')
+    thisUrl = f"{scheme}://{request.host}"
+    
+    with open(os.path.join(os.path.dirname(__file__), 'ai-plugin.json'), 'r') as f:
+        content = f.read()
+    
+    # Replace PLUGIN_HOSTNAME with thisUrl
+    modified_content = content.replace('PLUGIN_HOSTNAME', thisUrl)
+
+    
+    return Response(modified_content, content_type='application/json')
 
 
 @app.route('/openapi.yaml')
 def serve_openapi_yaml():
+    scheme = request.headers.get('X-Forwarded-Proto', 'http')
+    thisUrl = f"{scheme}://{request.host}"
+
     with open(os.path.join(os.path.dirname(__file__), 'openapi.yaml'), 'r') as f:
         yaml_data = f.read()
-    yaml_data = yaml.load(yaml_data, Loader=yaml.FullLoader)
-    return jsonify(yaml_data)
+
+    # Replace PLUGIN_HOSTNAME with thisUrl
+    modified_yaml_data = yaml_data.replace('PLUGIN_HOSTNAME', thisUrl)
+
+    # Convert the YAML string to a Python dictionary and then jsonify it
+    yaml_dict = yaml.load(modified_yaml_data, Loader=yaml.FullLoader)
+    return jsonify(yaml_dict)
 
 
 @app.route('/openapi.json')
 def serve_openapi_json():
     return send_from_directory(os.path.dirname(__file__), 'openapi.json')
+
 
 
 @app.route('/todos', methods=['GET', 'POST'])
