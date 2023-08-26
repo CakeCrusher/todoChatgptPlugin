@@ -9,6 +9,9 @@ app = Flask(__name__)
 
 PORT = 3333
 thisUrl = "http://127.0.0.1:3333"
+verificationTokens = {
+    "OPENAI": "OPENAI_VERIFICATION_TOKEN",
+}
 
 # Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
 CORS(app, origins=[thisUrl, "https://chat.openai.com"])
@@ -34,6 +37,8 @@ def serve_manifest():
     
     # Replace PLUGIN_HOSTNAME with thisUrl
     modified_content = content.replace('PLUGIN_HOSTNAME', thisUrl)
+    for key, value in verificationTokens.items():
+        modified_content = modified_content.replace(key+"_VERIFICATION_TOKEN", value)
 
     
     return Response(modified_content, content_type='application/json')
