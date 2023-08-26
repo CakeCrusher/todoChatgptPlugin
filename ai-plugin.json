@@ -5,6 +5,8 @@
   "description_for_human": "Manage your TODO list. You can add, remove and view your TODOs.",
   "description_for_model": "Plugin for managing a TODO list, you can add, remove and view your TODOs.",
   "auth": {
+    "type": "service_http",
+    "authorization_type": "bearer",
     "verification_tokens": {
       "openai": "OPENAI_VERIFICATION_TOKEN"
     }

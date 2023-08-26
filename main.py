@@ -10,8 +10,9 @@ app = Flask(__name__)
 PORT = 3333
 thisUrl = "http://127.0.0.1:3333"
 verificationTokens = {
-    "OPENAI": "OPENAI_VERIFICATION_TOKEN",
+    "OPENAI": "c772228fc2e84ecb83d298089f9fd4d0",
 }
+AUTHORIZATION_SECRET = "secret"
 
 # Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
 CORS(app, origins=[thisUrl, "https://chat.openai.com"])
@@ -71,6 +72,10 @@ def wrapper():
     global _TODO
 
     print("\n/todo headers: \n",request.headers)
+
+    # verify Authorization: Bearer secret
+    if request.headers.get('Authorization') != "Bearer "+AUTHORIZATION_SECRET:
+        return jsonify({"error": "Invalid Authorization token"}), 401
 
     if request.method == 'GET':
         # Get the list of todos
