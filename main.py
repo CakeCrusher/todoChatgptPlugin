@@ -20,6 +20,9 @@ _TODO = []
 
 @app.route('/.well-known/ai-plugin.json')
 def serve_manifest():
+    scheme = request.headers.get('X-Forwarded-Proto', 'http')
+    thisUrl = f"{scheme}://{request.host}"
+    
     # print headers
     print("\nmanifest headers: \n",request.headers)
     # get current host
@@ -51,7 +54,7 @@ def serve_openapi_yaml():
     yaml_dict = yaml.load(modified_yaml_data, Loader=yaml.FullLoader)
     return jsonify(yaml_dict)
 
-
+# /openapi.json not supported 
 @app.route('/openapi.json')
 def serve_openapi_json():
     return send_from_directory(os.path.dirname(__file__), 'openapi.json')
@@ -62,9 +65,7 @@ def serve_openapi_json():
 def wrapper():
     global _TODO
 
-    headers = {
-        'Content-Type': 'application/json',
-    }
+    print("\n/todo headers: \n",request.headers)
 
     if request.method == 'GET':
         # Get the list of todos
