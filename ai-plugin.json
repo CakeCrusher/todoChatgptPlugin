@@ -6,7 +6,8 @@
   "description_for_model": "Plugin for managing a TODO list, you can add, remove and view your TODOs.",
   "auth": {
     "verification_tokens": {
-      "openai": "OPENAI_VERIFICATION_TOKEN"
+      "openai": "OPENAI_VERIFICATION_TOKEN",
+      "openplugin": "OPENPLUGIN_VERIFICATION_TOKEN"
     }
   },
   "api": {
