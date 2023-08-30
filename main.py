@@ -11,6 +11,7 @@ PORT = 3333
 thisUrl = "http://127.0.0.1:3333"
 verificationTokens = {
     "OPENAI": "c772228fc2e84ecb83d298089f9fd4d0",
+    "OPENPLUGIN": "189b1325-df86-4968-a03b-75d34c80c9e9"
 }
 AUTHORIZATION_SECRET = "secret"
 
