@@ -11,7 +11,8 @@
     "authorization_url": "PLUGIN_HOSTNAME/auth/oauth_exchange",
     "authorization_content_type": "application/json",
     "verification_tokens": {
-      "openai": "OPENAI_VERIFICATION_TOKEN"
+      "openai": "OPENAI_VERIFICATION_TOKEN",
+      "openplugin": "OPENPLUGIN_VERIFICATION_TOKEN"
     }
   },
   "api": {
