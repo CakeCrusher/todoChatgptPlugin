@@ -11,7 +11,7 @@ PORT = 3333
 thisUrl = "http://127.0.0.1:3333"
 verificationTokens = {
     "OPENAI": "c772228fc2e84ecb83d298089f9fd4d0",
-    "OPENPLUGIN": "189b1325-df86-4968-a03b-75d34c80c9e9"
+    "OPENPLUGIN": "4ca3ef06e7c5429f9140e02c0d67133e"
 }
 
 # Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
@@ -65,11 +65,15 @@ def serve_openapi_yaml():
 def serve_openapi_json():
     return send_from_directory(os.path.dirname(__file__), 'openapi.json')
 
-
+# this is the key to getting authenticated and I was not able to find it in any of the client fetches 
+OPENAI_TOKEN = "def456"
 
 @app.route('/todos', methods=['GET', 'POST'])
 def wrapper():
     global _TODO
+    # verify header contains the correct token
+    if request.headers.get('Authorization') != f"Bearer {OPENAI_TOKEN}":
+        return jsonify(error="Unauthorized"), 401
 
     print("\n/todo headers: \n",request.headers)
 
@@ -114,8 +118,6 @@ def oauth():
 # Sample names
 OPENAI_CLIENT_ID = "id"
 OPENAI_CLIENT_SECRET = "secret"
-# this is the key to getting authenticated and I was not able to find it in any of the client fetches 
-OPENAI_TOKEN = "def456"
 
 @app.post("/auth/oauth_exchange")
 def oauth_exchange():
