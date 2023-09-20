@@ -7,7 +7,7 @@
   "auth": {
     "type": "oauth",
     "client_url": "PLUGIN_HOSTNAME/oauth",
-    "scope": "",
+    "scope": "everyting",
     "authorization_url": "PLUGIN_HOSTNAME/auth/oauth_exchange",
     "authorization_content_type": "application/json",
     "verification_tokens": {

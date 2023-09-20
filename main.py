@@ -10,8 +10,8 @@ app = Flask(__name__)
 PORT = 3333
 thisUrl = "http://127.0.0.1:3333"
 verificationTokens = {
-    "OPENAI": "c772228fc2e84ecb83d298089f9fd4d0",
-    "OPENPLUGIN": "4ca3ef06e7c5429f9140e02c0d67133e"
+    "OPENAI": "e4e4578ccd7c4aabbc9800a8248eaabb",
+    "OPENPLUGIN": "c8c2e5737da4464bbbb227e9d58293f3"
 }
 
 # Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
@@ -72,10 +72,11 @@ OPENAI_TOKEN = "def456"
 def wrapper():
     global _TODO
     # verify header contains the correct token
+    print("\n/todo headers: \n",request.headers)
+
     if request.headers.get('Authorization') != f"Bearer {OPENAI_TOKEN}":
         return jsonify(error="Unauthorized"), 401
 
-    print("\n/todo headers: \n",request.headers)
 
     if request.method == 'GET':
         # Get the list of todos
